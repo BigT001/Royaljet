@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/outfit';
+@import '@fontsource-variable/inter';
+
+@theme {
+  --font-display: 'Outfit Variable', 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand — sampled from the RoyalJet logo */
+  --color-brand-50: #eef6ff;
+  --color-brand-100: #d9eaff;
+  --color-brand-200: #bcdbff;
+  --color-brand-300: #8ec5ff;
+  --color-brand-400: #4aa6ff;
+  --color-brand-500: #1a86f5;
+  --color-brand-600: #0a68e0;
+  --color-brand-700: #0a53b4;
+  --color-brand-800: #0e468f;
+  --color-brand-900: #113d75;
+
+  --color-jet-300: #ffd27a;
+  --color-jet-400: #ffb938;
+  --color-jet-500: #ff9f12;
+  --color-jet-600: #f07d05;
+  --color-jet-700: #c75b07;
+
+  --color-navy-700: #0d2150;
+  --color-navy-800: #0a1a40;
+  --color-navy-900: #061331;
+  --color-navy-950: #030a1d;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-white font-sans text-slate-700 antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-navy-900 tracking-tight;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { @apply bg-jet-400 text-navy-900; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-jet-500; }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.2em] text-jet-600 uppercase;
+  &::before {
+    content: '';
+    @apply h-px w-8 bg-current;
+  }
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-display text-[15px] font-semibold transition-all duration-300 select-none;
+}
+@utility btn-primary {
+  @apply btn bg-linear-to-r from-jet-500 to-jet-600 text-white shadow-[0_10px_30px_-10px_rgba(240,125,5,0.8)] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-12px_rgba(240,125,5,0.9)];
+}
+@utility btn-blue {
+  @apply btn bg-linear-to-r from-brand-500 to-brand-700 text-white shadow-[0_10px_30px_-10px_rgba(10,104,224,0.8)] hover:-translate-y-0.5;
+}
+@utility btn-ghost {
+  @apply btn border border-white/25 bg-white/5 text-white backdrop-blur hover:border-white/50 hover:bg-white/10;
+}
+@utility btn-outline {
+  @apply btn border border-navy-900/15 text-navy-900 hover:border-brand-600 hover:text-brand-600;
+}
+@utility card {
+  @apply rounded-3xl border border-slate-200/80 bg-white shadow-[0_1px_0_rgba(15,23,42,0.04),0_20px_50px_-30px_rgba(15,23,42,0.35)];
+}
+@utility text-gradient {
+  @apply bg-linear-to-r from-jet-400 via-jet-500 to-jet-600 bg-clip-text text-transparent;
+}
+@utility text-gradient-blue {
+  @apply bg-linear-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent;
+}
+@utility grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+@utility input {
+  @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-navy-900 placeholder:text-slate-400 transition focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 focus:outline-none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
