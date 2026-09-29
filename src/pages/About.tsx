@@ -1,20 +1,17 @@
-import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Eye, Heart, MapPin, Target, Warehouse } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
+import PhotoStack from '../components/PhotoStack'
 import SectionHeading from '../components/SectionHeading'
 import SmartImage from '../components/SmartImage'
 import CTABanner from '../components/CTABanner'
 import { chinaWarehouse, nigeriaOffice, values } from '../data/site'
 import { usePageMeta } from '../hooks/usePageMeta'
-import { usePrefersReducedMotion } from '../hooks/useReducedMotion'
 
-const Containers = lazy(() => import('../three/Containers'))
 
 export default function About() {
   usePageMeta('About Us', 'Learn about RoyalJet Int’l Shipping and Logistics Ltd — your trusted logistics partner from China to Nigeria.')
-  const reduced = usePrefersReducedMotion()
 
   return (
     <>
@@ -43,11 +40,22 @@ export default function About() {
             </Link>
           </Reveal>
         </div>
-        <Reveal className="relative h-[24rem] rounded-[2rem] bg-linear-to-br from-brand-50 via-white to-jet-300/20 sm:h-[30rem]">
-          <Suspense fallback={null}>
-            <Containers reducedMotion={reduced} />
-          </Suspense>
-        </Reveal>
+        <PhotoStack
+          ring="ring-white"
+          main={{ name: 'containerShip', alt: 'Container ship loaded with cargo at port' }}
+          inset={{ name: 'warehouse', alt: 'Goods wrapped and ready at the RoyalJet Guangzhou warehouse' }}
+          badge={
+            <div className="flex items-center gap-3 rounded-2xl bg-white p-3 pr-5 shadow-xl ring-1 ring-slate-100">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-linear-to-br from-brand-500 to-brand-700 text-white">
+                <Warehouse className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="font-display text-sm font-semibold text-navy-900">Guangzhou → Lagos</p>
+                <p className="text-xs text-slate-500">Air & sea freight</p>
+              </div>
+            </div>
+          }
+        />
       </section>
 
       <section className="bg-slate-50 py-16 sm:py-24 lg:py-32">

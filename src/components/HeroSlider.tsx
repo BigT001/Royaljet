@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { WhatsAppIcon } from './BrandIcons'
+import TrackingForm from './TrackingForm'
 import { heroSlides } from '../data/images'
 import { whatsappLink } from '../data/site'
 import { usePrefersReducedMotion } from '../hooks/useReducedMotion'
@@ -16,13 +17,14 @@ export default function HeroSlider() {
   const [direction, setDirection] = useState(1)
   const [hoverPaused, setHoverPaused] = useState(false)
   const [userPaused, setUserPaused] = useState(false)
+  const [focusPaused, setFocusPaused] = useState(false)
   const [visible, setVisible] = useState(true)
   const sectionRef = useRef<HTMLElement>(null)
   const touch = useRef<{ x: number; y: number } | null>(null)
 
   const count = heroSlides.length
   const slide = heroSlides[index]
-  const paused = reduced || userPaused || hoverPaused || !visible
+  const paused = reduced || userPaused || hoverPaused || focusPaused || !visible
 
   const go = useCallback(
     (to: number, dir?: number) => {
@@ -52,6 +54,7 @@ export default function HeroSlider() {
   }, [])
 
   const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.target instanceof HTMLInputElement) return
     if (e.key === 'ArrowRight') next()
     if (e.key === 'ArrowLeft') prev()
   }
@@ -62,9 +65,14 @@ export default function HeroSlider() {
       aria-roledescription="carousel"
       aria-label="RoyalJet highlights"
       onKeyDown={onKeyDown}
+      onFocus={(e) => e.target instanceof HTMLInputElement && setFocusPaused(true)}
+      onBlur={(e) => e.target instanceof HTMLInputElement && setFocusPaused(false)}
       onMouseEnter={() => setHoverPaused(true)}
       onMouseLeave={() => setHoverPaused(false)}
-      onTouchStart={(e) => (touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY })}
+      onTouchStart={(e) => {
+        // Let people interact with the tracking field without triggering a swipe
+        touch.current = e.target instanceof HTMLInputElement ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      }}
       onTouchEnd={(e) => {
         if (!touch.current) return
         const dx = e.changedTouches[0].clientX - touch.current.x
@@ -117,7 +125,7 @@ export default function HeroSlider() {
 
               <h1 className="mt-5 text-[2.35rem] leading-[1.04] font-bold text-white sm:mt-6 sm:text-6xl lg:text-[4.4rem]">
                 {slide.title.map((line, i) => (
-                  <span key={line} className="block overflow-hidden pb-1">
+                  <span key={line} className="-mb-[0.14em] block overflow-hidden pb-[0.14em]">
                     <motion.span
                       className={`block ${i === 1 ? 'text-gradient' : ''}`}
                       variants={{ in: { y: '105%' }, show: { y: 0 }, out: { y: '-105%' } }}
@@ -139,18 +147,26 @@ export default function HeroSlider() {
             </motion.div>
           </AnimatePresence>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link to="/contact" className="btn-primary">
-              Get a Free Quote <ArrowRight className="h-4 w-4" />
+          <div className="mt-7 grid max-w-xl grid-cols-2 gap-3 sm:mt-8 sm:flex sm:max-w-none">
+            <Link to="/contact" className="btn-primary !px-3 sm:!px-6">
+              <span className="sm:hidden">Get a Quote</span>
+              <span className="hidden sm:inline">Get a Free Quote</span>
+              <ArrowRight className="h-4 w-4 shrink-0" />
             </Link>
             <a
               href={whatsappLink('Hello RoyalJet, I would like to ship goods from China to Nigeria.')}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-ghost"
+              className="btn-ghost !px-3 sm:!px-6"
             >
-              <WhatsAppIcon /> Chat on WhatsApp
+              <WhatsAppIcon className="h-5 w-5 shrink-0" />
+              <span className="sm:hidden">WhatsApp</span>
+              <span className="hidden sm:inline">Chat on WhatsApp</span>
             </a>
+          </div>
+
+          <div className="mt-6 max-w-xl">
+            <TrackingForm />
           </div>
         </div>
 

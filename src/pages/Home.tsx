@@ -1,10 +1,10 @@
-import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, ArrowUpRight, BadgeCheck, Clock, HandCoins, Headset, Plane, Ship, ShieldCheck, Sparkles } from 'lucide-react'
 import HeroSlider from '../components/HeroSlider'
 import Gallery from '../components/Gallery'
 import Reveal from '../components/Reveal'
+import PhotoStack from '../components/PhotoStack'
 import SectionHeading from '../components/SectionHeading'
 import SmartImage from '../components/SmartImage'
 import ServiceIcon from '../components/ServiceIcon'
@@ -14,10 +14,7 @@ import CTABanner from '../components/CTABanner'
 import { InstagramIcon, WhatsAppIcon } from '../components/BrandIcons'
 import { company, services, steps, whatsappLink } from '../data/site'
 import { usePageMeta } from '../hooks/usePageMeta'
-import { usePrefersReducedMotion } from '../hooks/useReducedMotion'
 
-const Globe = lazy(() => import('../three/Globe'))
-const Containers = lazy(() => import('../three/Containers'))
 
 const ease = [0.22, 1, 0.36, 1] as const
 
@@ -57,62 +54,6 @@ function FeatureBar() {
         </motion.ul>
       </div>
     </div>
-  )
-}
-
-function RouteSection() {
-  const reduced = usePrefersReducedMotion()
-  return (
-    <section className="relative isolate overflow-hidden bg-navy-950 py-20 text-white sm:py-24 lg:py-28">
-      <div className="grid-bg absolute inset-0 -z-10" />
-      <div className="absolute top-1/2 right-0 -z-10 h-[32rem] w-[32rem] -translate-y-1/2 rounded-full bg-brand-600/25 blur-[120px]" />
-      <div className="container-x grid items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
-        <div>
-          <SectionHeading
-            dark
-            align="left"
-            eyebrow="Our route"
-            title={<>One dedicated lane: <span className="text-gradient">Guangzhou to Lagos</span></>}
-            intro="Every shipment leaves our Guangzhou warehouse and arrives at our Lagos office in Ajao Estate, with delivery onward to anywhere in Nigeria."
-          />
-          <Reveal delay={0.1}>
-            <div className="mt-8 flex items-center gap-4 rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur sm:p-6">
-              <div>
-                <p className="font-display text-3xl font-bold">CAN</p>
-                <p className="text-sm text-slate-400">Guangzhou, China</p>
-              </div>
-              <div className="relative h-px flex-1 bg-linear-to-r from-jet-500/0 via-jet-500 to-jet-500/0">
-                <motion.span
-                  className="absolute -top-2.5 left-0"
-                  animate={reduced ? undefined : { left: ['0%', '92%'] }}
-                  transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  <Plane className="h-5 w-5 rotate-45 text-jet-400" />
-                </motion.span>
-              </div>
-              <div className="text-right">
-                <p className="font-display text-3xl font-bold">LOS</p>
-                <p className="text-sm text-slate-400">Lagos, Nigeria</p>
-              </div>
-            </div>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Link to="/how-it-works" className="btn-primary">
-                See How It Works <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a href={company.phoneHref} className="btn-ghost">
-                <Headset className="h-4 w-4" /> {company.phoneDisplay}
-              </a>
-            </div>
-          </Reveal>
-        </div>
-        <Reveal className="relative mx-auto aspect-square w-full max-w-[36rem]">
-          <Suspense fallback={<div className="absolute inset-[12%] animate-pulse rounded-full bg-brand-700/30 blur-xl" />}>
-            <Globe reducedMotion={reduced} />
-          </Suspense>
-          <p className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-slate-500">Drag to rotate</p>
-        </Reveal>
-      </div>
-    </section>
   )
 }
 
@@ -274,7 +215,6 @@ function Process() {
 }
 
 function WhyUs() {
-  const reduced = usePrefersReducedMotion()
   const reasons = [
     { icon: Clock, title: 'Fast & dependable', body: 'Regular departures and quick handling at both ends keep your goods moving.' },
     { icon: HandCoins, title: 'Honest, affordable rates', body: 'Clear pricing by weight or volume, with no hidden charges.' },
@@ -306,11 +246,21 @@ function WhyUs() {
             ))}
           </div>
         </div>
-        <Reveal className="relative h-[24rem] sm:h-[30rem] lg:h-[36rem]">
-          <Suspense fallback={null}>
-            <Containers reducedMotion={reduced} />
-          </Suspense>
-        </Reveal>
+        <PhotoStack
+          main={{ name: 'containers', alt: 'Stacked shipping containers ready for export' }}
+          inset={{ name: 'warehouse', alt: 'Goods wrapped and labelled at the RoyalJet Guangzhou warehouse' }}
+          badge={
+            <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-black/50 p-3 pr-5 backdrop-blur-xl">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-jet-500 text-navy-950">
+                <ShieldCheck className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="font-display text-sm font-semibold text-white">Checked & wrapped</p>
+                <p className="text-xs text-white/70">at our Guangzhou warehouse</p>
+              </div>
+            </div>
+          }
+        />
       </div>
     </section>
   )
@@ -422,7 +372,6 @@ export default function Home() {
       <AboutIntro />
       <ServicesGrid />
       <Marquee />
-      <RouteSection />
       <Process />
       <WhyUs />
       <FreightModes />

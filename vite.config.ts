@@ -41,12 +41,9 @@ export default defineConfig(({ mode }) => {
     ],
     build: {
       target: 'es2020',
-      // three.js is ~250 kB gzipped and only loaded lazily for the 3D scenes
-      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes('node_modules/three') || id.includes('@react-three')) return 'three'
             if (id.includes('node_modules/framer-motion') || id.includes('node_modules/motion')) return 'motion'
           },
         },
