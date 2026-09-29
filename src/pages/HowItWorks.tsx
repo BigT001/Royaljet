@@ -22,7 +22,7 @@ export default function HowItWorks() {
         intro="Everything you need to know to start shipping from China to Nigeria with RoyalJet — in four simple steps."
       />
 
-      <section className="container-x py-24 lg:py-32">
+      <section className="container-x py-16 sm:py-24 lg:py-32">
         <div className="relative mx-auto max-w-4xl">
           <div className="absolute top-0 bottom-0 left-8 w-px bg-linear-to-b from-brand-500 via-jet-500 to-brand-500 sm:left-1/2" />
           {steps.map((s, i) => {
@@ -46,7 +46,7 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      <section id="warehouse" className="scroll-mt-24 bg-slate-50 py-24 lg:py-32">
+      <section id="warehouse" className="scroll-mt-24 bg-slate-50 py-16 sm:py-24 lg:py-32">
         <div className="container-x">
           <SectionHeading eyebrow="Our China warehouse" title="Send your goods to this address" intro="Give this address to your supplier or enter it at checkout on 1688, Taobao, Alibaba and other Chinese platforms." />
           <div className="mt-14">
@@ -55,7 +55,7 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      <section className="container-x grid gap-6 py-24 lg:grid-cols-2 lg:py-32">
+      <section className="container-x grid gap-6 py-16 sm:py-24 lg:grid-cols-2 lg:py-32">
         <Reveal>
           <div className="card h-full p-8 sm:p-10">
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-brand-50 text-brand-600">

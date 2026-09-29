@@ -21,12 +21,12 @@ export default function About() {
       <PageHero
         crumb="About Us"
         eyebrow="Who we are"
-        image="team"
+        image="containerShip"
         title={<>Your trusted logistics partner from <span className="text-gradient">China to Nigeria</span></>}
         intro="We make international shipping simple, reliable and affordable for individuals, businesses and importers."
       />
 
-      <section className="container-x grid items-center gap-14 py-24 lg:grid-cols-2 lg:py-32">
+      <section className="container-x grid items-center gap-10 py-16 sm:py-24 lg:grid-cols-2 lg:py-32">
         <div>
           <SectionHeading align="left" eyebrow="Our story" title="Simple, reliable and affordable shipping" />
           <Reveal delay={0.1} className="mt-6 space-y-5 text-lg leading-relaxed text-slate-600">
@@ -50,7 +50,7 @@ export default function About() {
         </Reveal>
       </section>
 
-      <section className="bg-slate-50 py-24 lg:py-32">
+      <section className="bg-slate-50 py-16 sm:py-24 lg:py-32">
         <div className="container-x grid gap-6 md:grid-cols-3">
           {[
             { icon: Target, title: 'Our Mission', body: 'To make importing from China easy and affordable for every Nigerian — from first-time buyers to growing businesses.' },
@@ -70,7 +70,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="container-x py-24 lg:py-32">
+      <section className="container-x py-16 sm:py-24 lg:py-32">
         <SectionHeading eyebrow="Our values" title="What makes RoyalJet different" />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {values.map((v, i) => (

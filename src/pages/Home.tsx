@@ -2,6 +2,8 @@ import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, ArrowUpRight, BadgeCheck, Clock, HandCoins, Headset, Plane, Ship, ShieldCheck, Sparkles } from 'lucide-react'
+import HeroSlider from '../components/HeroSlider'
+import Gallery from '../components/Gallery'
 import Reveal from '../components/Reveal'
 import SectionHeading from '../components/SectionHeading'
 import SmartImage from '../components/SmartImage'
@@ -19,151 +21,96 @@ const Containers = lazy(() => import('../three/Containers'))
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-function Hero() {
+function FeatureBar() {
+  const items = [
+    { icon: Plane, t: 'Air Freight', d: 'Fastest to Lagos' },
+    { icon: Ship, t: 'Sea Freight', d: 'Best for bulky goods' },
+    { icon: HandCoins, t: 'Supplier Payment', d: 'Pay in Naira' },
+    { icon: ShieldCheck, t: 'Safe Delivery', d: 'Pickup or doorstep' },
+  ]
+  return (
+    <div className="relative z-10 bg-white">
+      <div className="container-x">
+        <motion.ul
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={{ show: { transition: { staggerChildren: 0.08 } } }}
+          className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl bg-slate-200 shadow-[0_30px_70px_-35px_rgba(6,19,49,0.45)] ring-1 ring-slate-200 lg:-mt-14 lg:grid-cols-4 -mt-6"
+        >
+          {items.map(({ icon: Icon, t, d }) => (
+            <motion.li
+              key={t}
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.5, ease }}
+              className="group flex items-center gap-3 bg-white p-4 sm:gap-4 sm:p-6"
+            >
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand-50 text-brand-600 transition duration-300 group-hover:scale-110 group-hover:bg-jet-500 group-hover:text-white sm:h-12 sm:w-12">
+                <Icon className="h-5 w-5" />
+              </span>
+              <div className="min-w-0">
+                <p className="font-display text-[15px] leading-tight font-semibold text-navy-900 sm:text-base">{t}</p>
+                <p className="mt-0.5 text-xs text-slate-500 sm:text-sm">{d}</p>
+              </div>
+            </motion.li>
+          ))}
+        </motion.ul>
+      </div>
+    </div>
+  )
+}
+
+function RouteSection() {
   const reduced = usePrefersReducedMotion()
   return (
-    <section className="relative isolate overflow-hidden bg-navy-900 text-white">
-      <SmartImage name="heroPort" alt="" priority className="absolute inset-0 -z-30" imgClassName="opacity-25 mix-blend-luminosity" />
-      <div className="absolute inset-0 -z-20 bg-linear-to-br from-navy-950 via-navy-900/95 to-brand-900/70" />
+    <section className="relative isolate overflow-hidden bg-navy-950 py-20 text-white sm:py-24 lg:py-28">
       <div className="grid-bg absolute inset-0 -z-10" />
-      <div className="absolute top-1/3 -right-40 -z-10 h-[36rem] w-[36rem] rounded-full bg-brand-600/30 blur-[120px]" />
-      <div className="absolute -bottom-40 -left-20 -z-10 h-96 w-96 rounded-full bg-jet-500/20 blur-[120px]" />
-
-      <div className="container-x grid items-center gap-6 pt-14 pb-10 lg:min-h-[calc(100svh-7.5rem)] lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:py-16">
-        <div className="relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 py-1.5 pr-4 pl-1.5 text-sm backdrop-blur"
-          >
-            <span className="rounded-full bg-jet-500 px-2.5 py-0.5 text-xs font-semibold text-navy-950">China → Nigeria</span>
-            Air & Sea Freight Specialists
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease }}
-            className="mt-6 text-[2.6rem] leading-[1.02] font-bold text-white sm:text-6xl lg:text-7xl"
-          >
-            Ship from China to Nigeria{' '}
-            <span className="relative whitespace-nowrap">
-              <span className="text-gradient">with ease.</span>
-              <svg viewBox="0 0 300 20" className="absolute -bottom-2 left-0 w-full text-jet-500" aria-hidden="true">
-                <motion.path
-                  d="M4 14 C 80 4, 200 4, 296 12"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.2, delay: 0.8, ease }}
-                />
-              </svg>
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25, ease }}
-            className="mt-7 max-w-xl text-lg leading-relaxed text-slate-300"
-          >
-            From sourcing and procurement to shipping and delivery, RoyalJet moves your goods from our Guangzhou warehouse to Lagos — simple, reliable and affordable.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35, ease }}
-            className="mt-9 flex flex-col gap-3 sm:flex-row"
-          >
-            <Link to="/contact" className="btn-primary">
-              Get a Free Quote <ArrowRight className="h-4 w-4" />
-            </Link>
-            <a href={whatsappLink('Hello RoyalJet, I would like to ship goods from China to Nigeria.')} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-              <WhatsAppIcon /> Chat on WhatsApp
-            </a>
-          </motion.div>
-
-          <motion.ul
-            initial="hidden"
-            animate="show"
-            variants={{ show: { transition: { staggerChildren: 0.08, delayChildren: 0.5 } } }}
-            className="mt-10 grid max-w-xl grid-cols-2 gap-3 text-sm sm:grid-cols-4"
-          >
-            {[
-              { icon: Plane, t: 'Air Freight' },
-              { icon: Ship, t: 'Sea Freight' },
-              { icon: HandCoins, t: 'Supplier Payment' },
-              { icon: ShieldCheck, t: 'Safe Delivery' },
-            ].map(({ icon: Icon, t }) => (
-              <motion.li
-                key={t}
-                variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
-                className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5 backdrop-blur"
-              >
-                <Icon className="h-4 w-4 shrink-0 text-jet-400" /> {t}
-              </motion.li>
-            ))}
-          </motion.ul>
+      <div className="absolute top-1/2 right-0 -z-10 h-[32rem] w-[32rem] -translate-y-1/2 rounded-full bg-brand-600/25 blur-[120px]" />
+      <div className="container-x grid items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
+        <div>
+          <SectionHeading
+            dark
+            align="left"
+            eyebrow="Our route"
+            title={<>One dedicated lane: <span className="text-gradient">Guangzhou to Lagos</span></>}
+            intro="Every shipment leaves our Guangzhou warehouse and arrives at our Lagos office in Ajao Estate, with delivery onward to anywhere in Nigeria."
+          />
+          <Reveal delay={0.1}>
+            <div className="mt-8 flex items-center gap-4 rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur sm:p-6">
+              <div>
+                <p className="font-display text-3xl font-bold">CAN</p>
+                <p className="text-sm text-slate-400">Guangzhou, China</p>
+              </div>
+              <div className="relative h-px flex-1 bg-linear-to-r from-jet-500/0 via-jet-500 to-jet-500/0">
+                <motion.span
+                  className="absolute -top-2.5 left-0"
+                  animate={reduced ? undefined : { left: ['0%', '92%'] }}
+                  transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <Plane className="h-5 w-5 rotate-45 text-jet-400" />
+                </motion.span>
+              </div>
+              <div className="text-right">
+                <p className="font-display text-3xl font-bold">LOS</p>
+                <p className="text-sm text-slate-400">Lagos, Nigeria</p>
+              </div>
+            </div>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Link to="/how-it-works" className="btn-primary">
+                See How It Works <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a href={company.phoneHref} className="btn-ghost">
+                <Headset className="h-4 w-4" /> {company.phoneDisplay}
+              </a>
+            </div>
+          </Reveal>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.2, ease }}
-          className="relative -mx-4 aspect-square sm:mx-auto sm:w-[34rem] lg:w-full"
-        >
+        <Reveal className="relative mx-auto aspect-square w-full max-w-[36rem]">
           <Suspense fallback={<div className="absolute inset-[12%] animate-pulse rounded-full bg-brand-700/30 blur-xl" />}>
             <Globe reducedMotion={reduced} />
           </Suspense>
-
-          {/* Floating route card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.7, ease }}
-            className="absolute bottom-4 left-4 w-60 rounded-2xl border border-white/10 bg-navy-950/70 p-4 backdrop-blur-xl sm:bottom-10 sm:left-0"
-          >
-            <div className="flex items-center justify-between text-xs text-slate-400">
-              <span>Route</span>
-              <span className="inline-flex items-center gap-1.5 text-emerald-400">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> Active
-              </span>
-            </div>
-            <div className="mt-3 flex items-center justify-between font-display">
-              <div>
-                <p className="text-lg font-bold text-white">CAN</p>
-                <p className="text-xs text-slate-400">Guangzhou</p>
-              </div>
-              <div className="relative mx-3 h-px flex-1 bg-linear-to-r from-jet-500/0 via-jet-500 to-jet-500/0">
-                <Plane className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 text-jet-400" />
-              </div>
-              <div className="text-right">
-                <p className="text-lg font-bold text-white">LOS</p>
-                <p className="text-xs text-slate-400">Lagos</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.7, ease }}
-            className="absolute top-6 right-4 hidden items-center gap-3 rounded-2xl border border-white/10 bg-navy-950/70 p-3 pr-5 backdrop-blur-xl sm:flex"
-          >
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-jet-500/15 text-jet-400">
-              <Headset className="h-5 w-5" />
-            </span>
-            <div>
-              <p className="text-xs text-slate-400">Talk to a real person</p>
-              <a href={company.phoneHref} className="font-display font-semibold text-white">{company.phoneDisplay}</a>
-            </div>
-          </motion.div>
-        </motion.div>
+          <p className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-slate-500">Drag to rotate</p>
+        </Reveal>
       </div>
     </section>
   )
@@ -187,12 +134,12 @@ function Marquee() {
 
 function AboutIntro() {
   return (
-    <section className="container-x grid items-center gap-14 py-24 lg:grid-cols-2 lg:py-32">
+    <section className="container-x grid items-center gap-10 py-16 sm:py-24 lg:grid-cols-2 lg:py-32">
       <Reveal x={-30} y={0} className="relative">
-        <div className="grid grid-cols-5 grid-rows-6 gap-4 sm:h-[34rem]">
-          <SmartImage name="containerShip" alt="Container ship carrying cargo" className="col-span-3 row-span-6 h-80 rounded-3xl sm:h-auto" />
-          <SmartImage name="warehouse" alt="Organised logistics warehouse" className="col-span-2 row-span-3 hidden rounded-3xl sm:block" />
-          <SmartImage name="airCargo" alt="Cargo aircraft in flight" className="col-span-2 row-span-3 hidden rounded-3xl sm:block" />
+        <div className="grid h-[26rem] grid-cols-5 grid-rows-2 gap-3 sm:h-[34rem] sm:gap-4">
+          <SmartImage name="containerShip" alt="Container ship loaded with cargo at port" className="col-span-3 row-span-2 rounded-3xl" />
+          <SmartImage name="warehouse" alt="Goods wrapped and ready at the RoyalJet Guangzhou warehouse" className="col-span-2 rounded-3xl" />
+          <SmartImage name="containers" alt="Stacked shipping containers" className="col-span-2 rounded-3xl" />
         </div>
         <div className="absolute -right-2 -bottom-8 flex items-center gap-4 rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-slate-100 sm:right-8">
           <span className="grid h-14 w-14 place-items-center rounded-2xl bg-linear-to-br from-brand-500 to-brand-700 text-white">
@@ -237,7 +184,7 @@ function AboutIntro() {
 
 function ServicesGrid() {
   return (
-    <section className="relative bg-slate-50 py-24 lg:py-32">
+    <section className="relative bg-slate-50 py-16 sm:py-24 lg:py-32">
       <div className="container-x">
         <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
           <SectionHeading
@@ -253,9 +200,20 @@ function ServicesGrid() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s, i) => (
-            <Reveal key={s.slug} delay={(i % 4) * 0.08}>
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={{ show: { transition: { staggerChildren: 0.07 } } }}
+          className="-mx-4 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:mt-14 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden"
+        >
+          {services.map((s) => (
+            <motion.div
+              key={s.slug}
+              variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease }}
+              className="w-[80%] shrink-0 snap-start sm:w-auto"
+            >
               <Link
                 to={`/services#${s.slug}`}
                 className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 transition duration-500 hover:-translate-y-1.5 hover:border-transparent hover:shadow-[0_30px_60px_-25px_rgba(10,83,180,0.5)]"
@@ -273,9 +231,10 @@ function ServicesGrid() {
                   </span>
                 </div>
               </Link>
-            </Reveal>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
+        <p className="mt-2 text-center text-sm text-slate-500 sm:hidden">Swipe to see all services →</p>
       </div>
     </section>
   )
@@ -283,7 +242,7 @@ function ServicesGrid() {
 
 function Process() {
   return (
-    <section className="container-x py-24 lg:py-32">
+    <section className="container-x py-16 sm:py-24 lg:py-32">
       <SectionHeading
         eyebrow="How it works"
         title={<>Shipping made simple in <span className="text-gradient">4 easy steps</span></>}
@@ -323,7 +282,7 @@ function WhyUs() {
     { icon: Headset, title: 'Real support', body: 'Talk to real people on WhatsApp and phone — we keep you updated.' },
   ]
   return (
-    <section className="relative isolate overflow-hidden bg-navy-900 py-24 text-white lg:py-32">
+    <section className="relative isolate overflow-hidden bg-navy-900 py-16 sm:py-24 text-white lg:py-32">
       <div className="grid-bg absolute inset-0 -z-10" />
       <div className="absolute -top-40 left-1/3 -z-10 h-96 w-96 rounded-full bg-brand-600/30 blur-[120px]" />
       <div className="container-x grid items-center gap-12 lg:grid-cols-2">
@@ -375,7 +334,7 @@ function FreightModes() {
     },
   ]
   return (
-    <section className="container-x py-24 lg:py-32">
+    <section className="container-x py-16 sm:py-24 lg:py-32">
       <SectionHeading eyebrow="Choose your mode" title="Air or sea — we’ve got you covered" intro="Not sure which to pick? Tell us what you’re shipping and we’ll recommend the best option for your budget and timeline." />
       <div className="mt-14 grid gap-6 lg:grid-cols-2">
         {modes.map(({ image, icon: Icon, title, body, tags }, i) => (
@@ -433,7 +392,7 @@ function InstagramStrip() {
 
 function FaqSection() {
   return (
-    <section className="container-x grid gap-12 py-24 lg:grid-cols-[1fr_1.4fr] lg:py-32">
+    <section className="container-x grid gap-12 py-16 sm:py-24 lg:grid-cols-[1fr_1.4fr] lg:py-32">
       <div>
         <SectionHeading
           align="left"
@@ -458,13 +417,16 @@ export default function Home() {
   usePageMeta('', "RoyalJet Int'l Shipping and Logistics Ltd — reliable, affordable air and sea shipping from China to Nigeria.")
   return (
     <>
-      <Hero />
-      <Marquee />
+      <HeroSlider />
+      <FeatureBar />
       <AboutIntro />
       <ServicesGrid />
+      <Marquee />
+      <RouteSection />
       <Process />
       <WhyUs />
       <FreightModes />
+      <Gallery />
       <InstagramStrip />
       <FaqSection />
       <CTABanner />

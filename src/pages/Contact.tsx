@@ -57,12 +57,12 @@ export default function Contact() {
       <PageHero
         crumb="Contact"
         eyebrow="Get in touch"
-        image="handshake"
+        image="warehouse"
         title={<>Let’s move your goods <span className="text-gradient">together</span></>}
         intro="Request a quote, ask a question or visit our office. We respond quickly on WhatsApp and phone."
       />
 
-      <section className="container-x grid gap-10 py-24 lg:grid-cols-[1fr_1.5fr] lg:py-32">
+      <section className="container-x grid gap-10 py-16 sm:py-24 lg:grid-cols-[1fr_1.5fr] lg:py-32">
         <div className="space-y-5">
           {[
             { icon: Phone, title: 'Call or WhatsApp', body: <a href={company.phoneHref} className="hover:text-brand-600">{company.phoneDisplay}</a> },

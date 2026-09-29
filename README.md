@@ -6,7 +6,8 @@ Built with **React + TypeScript + Vite**, **Tailwind CSS v4**, **Framer Motion**
 
 ## Features
 
-- **Interactive 3D globe** (hero) showing the animated Guangzhou → Lagos flight route, plus secondary lanes to Abuja, Port Harcourt and Kano. Drag to rotate.
+- **Hero photo slider** using RoyalJet's own photos: crossfade with slow zoom, animated headlines, progress bars, autoplay that pauses on hover or when off-screen, swipe and keyboard support.
+- **Interactive 3D globe** ("Our route" section) showing the animated Guangzhou → Lagos flight route, plus secondary lanes to Abuja, Port Harcourt and Kano. Drag to rotate.
 - **3D shipping-container stack** that follows the mouse.
 - **Warehouse address card** showing the exact Chinese address with one-click **copy to clipboard** (to paste straight to suppliers) and an English translation.
 - **Quote request form** and **shipment tracking form** that open WhatsApp pre-filled with the customer's details. No backend is needed.
@@ -37,8 +38,8 @@ Requires Node.js 20+.
 | Logo / favicons / social image | `public/brand/` |
 | Colours and fonts | `src/index.css` (`@theme` block) |
 
-### Using your own photos
-The site currently uses free-licence Unsplash photos. To use real photos of your warehouse, team or shipments, put them in `public/images/` and change the URLs in `src/data/images.ts`, for example `warehouse: '/images/warehouse.jpg'`. If a photo fails to load, a branded gradient shows in its place.
+### Photos
+RoyalJet's own photos are in `public/images/` and power the hero slider (`heroSlides` in `src/data/images.ts`), the gallery and several page headers. A few remaining images are free-licence Unsplash photos. To use real photos of your warehouse, team or shipments, put them in `public/images/` and change the URLs in `src/data/images.ts`, for example `warehouse: '/images/warehouse.jpg'`. If a photo fails to load, a branded gradient shows in its place.
 
 ### Regenerating globe data
 `npm run globe:data` rebuilds `src/data/globe-points.json` from Natural Earth land data.

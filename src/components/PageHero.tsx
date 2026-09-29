@@ -10,10 +10,10 @@ type Props = { eyebrow: string; title: ReactNode; intro: ReactNode; crumb: strin
 export default function PageHero({ eyebrow, title, intro, crumb, image }: Props) {
   return (
     <section className="relative isolate overflow-hidden bg-navy-900 text-white">
-      <SmartImage name={image} alt="" priority className="absolute inset-0 -z-20" imgClassName="opacity-40" />
-      <div className="absolute inset-0 -z-10 bg-linear-to-r from-navy-950 via-navy-900/85 to-navy-900/30" />
+      <SmartImage name={image} alt="" priority className="absolute inset-0 -z-20" imgClassName="animate-kenburns motion-reduce:animate-none" />
+      <div className="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/60 to-black/40 sm:bg-linear-to-r sm:from-black/85 sm:via-black/60 sm:to-black/20" />
       <div className="grid-bg absolute inset-0 -z-10" />
-      <div className="container-x py-24 sm:py-28 lg:py-32">
+      <div className="container-x py-20 sm:py-28 lg:py-32">
         <motion.nav
           aria-label="Breadcrumb"
           initial={{ opacity: 0, y: 12 }}
@@ -35,7 +35,7 @@ export default function PageHero({ eyebrow, title, intro, crumb, image }: Props)
         >
           {title}
         </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">
+        <motion.p initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-6 max-w-2xl text-lg leading-relaxed text-white/85">
           {intro}
         </motion.p>
       </div>

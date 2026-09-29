@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Header from './Header'
 import Footer from './Footer'
 import WhatsAppFloat from './WhatsAppFloat'
+import ScrollProgress from './ScrollProgress'
 
 function ScrollManager() {
   const { pathname, hash } = useLocation()
@@ -24,6 +26,15 @@ function ScrollManager() {
   return null
 }
 
+function PageFade() {
+  const { pathname } = useLocation()
+  return (
+    <motion.div key={pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.45, ease: 'easeOut' }}>
+      <Outlet />
+    </motion.div>
+  )
+}
+
 export default function Layout() {
   return (
     <>
@@ -31,9 +42,10 @@ export default function Layout() {
         Skip to content
       </a>
       <ScrollManager />
+      <ScrollProgress />
       <Header />
       <main id="main">
-        <Outlet />
+        <PageFade />
       </main>
       <Footer />
       <WhatsAppFloat />

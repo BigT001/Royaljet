@@ -32,7 +32,7 @@ export default function Services() {
         </div>
       </div>
 
-      <div className="container-x space-y-24 py-24 lg:space-y-32 lg:py-32">
+      <div className="container-x space-y-20 py-16 sm:space-y-24 sm:py-24 lg:space-y-32 lg:py-32">
         {services.map((s, i) => {
           const flip = i % 2 === 1
           return (
