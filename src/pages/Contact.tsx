@@ -11,7 +11,7 @@ type Form = { name: string; phone: string; email: string; service: string; mode:
 const empty: Form = { name: '', phone: '', email: '', service: services[0].title, mode: 'Air freight', goods: '', weight: '', message: '' }
 
 export default function Contact() {
-  usePageMeta('Contact Us', 'Contact RoyalJet Int’l Shipping and Logistics — call or WhatsApp +234 903 810 9552, or visit our Lagos office in Ajao Estate.')
+  usePageMeta('Contact Us', 'Contact RoyalJet Int’l Shipping and Logistics — call or WhatsApp +234 913 810 9552, or visit our Lagos office in Ajao Estate.')
   const [form, setForm] = useState<Form>(empty)
   const [errors, setErrors] = useState<Partial<Record<keyof Form, string>>>({})
   const [sent, setSent] = useState(false)

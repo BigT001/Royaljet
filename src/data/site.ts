@@ -7,9 +7,9 @@ export const company = {
   name: "RoyalJet Int'l Shipping and Logistics Ltd",
   shortName: 'RoyalJet',
   tagline: 'Your Trusted Logistics Partner from China to Nigeria',
-  phoneDisplay: '+234 903 810 9552',
-  phoneHref: 'tel:+2349038109552',
-  whatsappNumber: '2349038109552',
+  phoneDisplay: '+234 913 810 9552',
+  phoneHref: 'tel:+2349138109552',
+  whatsappNumber: '2349138109552',
   instagramHandle: '@royaljet_intl_shipping',
   instagramUrl: 'https://www.instagram.com/royaljet_intl_shipping',
 }
